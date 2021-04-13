@@ -89,11 +89,11 @@ module.exports = {
   mongodb: {
     connectionString: Env.get('MONGO_CONNECTION_STRING', null),
     connection: {
-      host: Env.get('127.0.0.1', 'localhost'),
-      port: Env.get('27017', 27017),
-      user: Env.get('admin', 'admin'),
-      pass: Env.get('admin', 'admin'),
-      database: Env.get('Integradora', 'adonis'),
+      host: Env.get('MONGO_HOST', 'localhost'),
+      port: Env.get('MONGO_PORT', 27017),
+      user: Env.get('MONGO_USER', ''),
+      pass: Env.get('MONGO_PASSWORD', ''),
+      database: Env.get('MONGO_DATABASE', 'local'),
       options: {
         // All options can be found at http://mongoosejs.com/docs/connections.html
       },
