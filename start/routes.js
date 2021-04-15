@@ -5,7 +5,7 @@ const Route = use('Route')
 Route.post('/login', 'AuthController.login')
 Route.post('/registrar', 'UserController.crear')
 
-//========================= Sensore y utileria ==========================================
+//========================= Sensores y utileria ==========================================
 Route.get('/getsenso', 'SensoreController.index')
 Route.get('/registrarsensor', 'SensoreController.registro')
 Route.get('/gettipos', 'TipoController.index')

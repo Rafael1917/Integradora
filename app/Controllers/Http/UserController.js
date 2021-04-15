@@ -6,7 +6,7 @@ class UserController {
         const data = request.only(['usuario', 'password'])
         await User.create(data)
         return response.created({
-            status: "Usuario registrado"
+            message: "Usuario registrado"
         })
     }
 //===================================== ACTUALIZAR USUARIOS =======================================
@@ -31,7 +31,7 @@ class UserController {
         })
     }
  //===================================== SELECT USUARIOS =======================================
-    async getusuarios({response,}){
+    async getusuarios({response}){
         const usuario = await User.query().fetch()
         return response.ok({
             status: true,
