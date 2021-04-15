@@ -16,3 +16,8 @@
 const Ws = use('Ws')
 
 Ws.channel('chat', 'ChatController')
+Ws.channel('auga', 'AguaController')
+Ws.channel('croquetas', 'CroquetasController')
+Ws.channel('agualvl', 'AguaLvlController')
+Ws.channel('croquetaslvl', 'CroquetasLvlController')
+Ws.channel('temperaturalvl', 'TemperaturaLvlController')

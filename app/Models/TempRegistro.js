@@ -5,18 +5,17 @@ const mongoose = use('Mongoose')
 
 const {Schema} = mongoose
 
-const RegistrosSchema = new Schema({
+const TempSchema = new Schema({
   sensor_id: Number,
-  datos: Number,
+  dato: Number,
   date: {type: Date, default: Date.now}
 })
-
 /**
- * @class registros
+ * @class TempRegistro
  */
-class registros extends BaseModel {
+class TempRegistro extends BaseModel {
   /**
-   * registros's schema
+   * TempRegistro's schema
    */
   static get schema () {
     return {
@@ -25,6 +24,6 @@ class registros extends BaseModel {
   }
 }
 
-RegistrosSchema.loadClass(registros)
+TempSchema.loadClass(TempRegistro)
 
-module.exports = mongoose.model('registros', RegistrosSchema)
+module.exports = mongoose.model('TempRegistro', TempSchema)

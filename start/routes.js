@@ -10,8 +10,11 @@ Route.get('/getsenso', 'SensoreController.index')
 Route.get('/registrarsensor', 'SensoreController.registro')
 Route.get('/gettipos', 'TipoController.index')
 Route.get('/registrartipos', 'TipoController.registro')
-Route.get('/getdatos', 'RegistroController.index')
-Route.get('/registrardatos', 'RegistroController.registro')
+// Route.get('/getdatos', 'RegistroController.index')
+// Route.get('/registrardatos', 'RegistroController.registro')
+Route.get('/getagua', 'AguaController.index')
+Route.get('/getcroquetas', 'CroquetaController.index')
+Route.get('/gettemp', 'TemperaturaController.index')
 
 //=========================Registro y update de perrito=================================
 Route.group(() => {
