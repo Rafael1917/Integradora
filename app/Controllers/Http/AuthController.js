@@ -4,10 +4,19 @@ class AuthController {
 
     async login({request, response, auth}){
         const {usuario, password} = request.only(['usuario', 'password'])
-        const token = await auth.withRefreshToken().attempt(usuario,password)
+        const token = await auth.attempt(usuario,password)
 
         return response.ok(token)
     }
+
+    async logout({request, response, auth}){
+        const refreshToken = '' // get it from user
+
+        await auth
+          .authenticator('jwt')
+          .revokeTokens([refreshToken], true)
+    }
+
     async getUser({response, auth}){
         const user = await auth.getUser()
 

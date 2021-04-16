@@ -10,24 +10,11 @@ class UserController {
         })
     }
 //===================================== ACTUALIZAR USUARIOS =======================================
-    async actualizar({params, request,response}){
-        const data = request.only(['id','usuario', 'password'])
-        const posto = new User()
-        posto.id = data['id']
-        posto.username = data['usuario']
-        posto.contra = data['password']
-        
-        if (await User.query()
-        .where('id', posto.id)
-        .update({'usuario': posto.username, 'password': posto.contra, 'updated_at': Date()})){
-         return response.status(200).json({
-             status: true,
-             message: "Usuario actualizado"
-         })
-        }
-        return response.status(400).json({
-            status: false,
-             message: "Usuario no actualizado"
+    async actualizar({ request,response,auth}){
+        const data = request.only(['usuario', 'password'])
+        await User.save(data)
+        return response.save({
+            message: User
         })
     }
  //===================================== SELECT USUARIOS =======================================

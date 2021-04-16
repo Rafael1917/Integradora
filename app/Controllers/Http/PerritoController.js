@@ -28,14 +28,14 @@ class PerritoController {
         const perr = new Perrito()
         perr.nombre = data['nombre']
         perr.foto = nombreF
-        perr.due = usuario['usuario']
+        perr.due = usuario['id']
         await perr.save()
         return response.created({
             data,due:usuario
         })
     }
 //===================================== ACTUALIZAR PERRITOS =======================================
-    async actualizar({params, request,response}){
+    async actualizar({request,response}){
         const data = request.only(['id','nombre', 'foto'])
         const posto = new Perrito()
         posto.id = data['id']
@@ -76,12 +76,34 @@ class PerritoController {
     //=====================================SELECT PERRITOS =======================================
     async getperritos({response, auth}){
         const usuario = await auth.getUser()
-        const data = usuario.usuario
+        const data = usuario.id
+        const num = await Perrito.query().where('due', data).getCount()
         const perrito = await Perrito.query().where('due', data).fetch()
 
+        if(num < 1){
+            return response.ok({
+                status:  true,
+                message: "Usted no ha registrado perros aún"
+            })
+        }
         return response.ok({
             status: true,
             data: perrito
+        })
+    }
+    //================================================DELETE PERRITO=================================
+    async delete({ params , response}){
+        const id = params.id
+        const perro = await Perrito.find(id)
+        if(await perro.delete()){
+            return response.status(200).json({
+                status: true,
+                message: "Perrito eliminado correctamente"
+            })
+        }
+        return response.status(400).json({
+            status: false,
+             message: "No se pudo eliminar el perrito"
         })
     }
 }

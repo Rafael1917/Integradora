@@ -9,7 +9,7 @@ class PerritoSchema extends Schema {
       table.increments()
       table.string('nombre', 80).notNullable().unique()
       table.string('foto', 250).notNullable()
-      table.string('due', 80).references('usuario').inTable('users')
+      table.string('due', 80).references('id').inTable('users')
       table.timestamps()
     })
   }
