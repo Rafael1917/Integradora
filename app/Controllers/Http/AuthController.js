@@ -4,7 +4,7 @@ class AuthController {
 
     async login({request, response, auth}){
         const {usuario, password} = request.only(['usuario', 'password'])
-        const token = await auth.attempt(usuario,password)
+        const token = await auth.withRefreshToken().attempt(usuario,password)
 
         return response.ok(token)
     }

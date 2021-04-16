@@ -11,11 +11,23 @@ class UserController {
     }
 //===================================== ACTUALIZAR USUARIOS =======================================
     async actualizar({ request,response,auth}){
-        const data = request.only(['usuario', 'password'])
-        await User.save(data)
-        return response.save({
-            message: User
-        })
+        const {usuario} = await request.only(['usuario'])
+        const {password} = await request.only(['password'])
+
+        let user = await auth.getUser()
+    
+        if (!user.id) {
+          return response.status(400).send(false)
+        }
+    
+        user.usuario = usuario
+        user.password = password
+    
+        if (!await user.save()) {
+          return response.status(500).send(false)
+        }
+    
+        return response.status(200).send("Usuario actualizado correctamente")
     }
  //===================================== SELECT USUARIOS =======================================
     async getusuarios({response}){
