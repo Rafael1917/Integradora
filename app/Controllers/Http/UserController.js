@@ -37,6 +37,26 @@ class UserController {
             data: usuario
         })
     }
+    //===========================================================================================
+    async getUsuarioWithPerro({response, request}){
+        const data = request.all();
+        const usuario = await User.Perro().where('id', data.id).fetch();
+  
+        const query = usuario.count();
+        if(query > 1){
+            return response.ok({
+              status: true,
+              data: usuario,
+              pase: true
+          })
+        } else {
+          return response.ok({
+            status: true,
+            data: usuario,
+            pase: false
+        })
+        }
+      }
 }
 
 module.exports = UserController
