@@ -1,5 +1,6 @@
 'use strict'
 const User = use('App/Models/User')
+const Dispensa = use('App/Models/Dispensador')
 class UserController {
 //===================================== REGISTRAR USUARIOS =======================================
     async crear({request, response}){
@@ -57,6 +58,30 @@ class UserController {
         })
         }
       }
+      //================================================= VINCULAR DISPENSADOR Y USUARIO ===============
+      async vincular({ request,response,auth}){
+        const usuario = await auth.getUser()
+        const dt = request.all()
+        const data = new Dispensa()
+        data.codigo = dt['codigo']
+        data.nombre = dt['nombre']
+        data.usuario = usuario['id']
+        await data.save()
+        return response.created({
+            message: "Se ha vinculado con su dispensador exitosamente"
+        })
+    }
+
+    //==================================== GET DISPENSADORES =================================================
+    async getdispensa({response, auth}){
+      const usuario = await auth.getUser()
+      const data = usuario.id
+      const dispensador = await Dispensa.query().where('usuario', data).fetch()
+      return response.ok({
+          status: true,
+          data: dispensador
+      })
+  }
 }
 
 module.exports = UserController

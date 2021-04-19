@@ -31,5 +31,7 @@ Route.group(() => {
   Route.group(() => {
   Route.put('/actualizar', 'UserController.actualizar')
   Route.get('/getusuarios', 'UserController.getusuarios')
+  Route.post('/vincular', 'UserController.vincular')
+  Route.get('/getdispensa', 'UserController.getdispensa')
   }).middleware('auth').prefix('usuarios/')
   
