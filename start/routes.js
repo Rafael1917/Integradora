@@ -25,6 +25,7 @@ Route.group(() => {
     Route.get('/getperritos', 'PerritoController.getperritos')
     Route.put('/actualizarperrito2', 'PerritoController.actualizar2')
     Route.get('/perros', 'UserController.getUsuarioWithPerro') //seagrego ruta
+    Route.get('/getperritosimg', 'PerritoController.getperritosImage') 
   }).middleware('auth').prefix('perros/')
 
 //=========================update y traer usuarios=================================

@@ -1,4 +1,6 @@
 'use strict'
+const db = use('Database')
+const Helpers = use('Helpers')
 const Perrito = use('App/Models/Perrito')
 class PerritoController {
 //===================================== REGISTRAR PERRITOS =======================================
@@ -143,6 +145,26 @@ class PerritoController {
             status: false,
              message: "No se han podido actualizar los datos del perrito"
         })
+    }
+    //============================================================================================
+    async getperritosImage({response, auth}){
+        const usuario = await auth.getUser()
+        const data = usuario.id
+        const num = await Perrito.query().where('due', data).getCount()
+        const perrito = await db.select('foto').from('perritos').where('due', data)
+        if(num < 1){
+            return response.ok({
+                status:  true,
+                message: "Usted no ha registrado perros aún"
+            })
+        }
+        const filePath = `./public/fotosperritos/${perrito[0].foto}`;
+
+        
+        return response.download(filePath);
+        
+       
+        
     }
 }
 

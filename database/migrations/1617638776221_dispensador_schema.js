@@ -9,7 +9,7 @@ class DispensadorSchema extends Schema {
       table.increments()
       table.string('codigo', 254).notNullable().unique()
       table.string('nombre', 254).notNullable()
-      table.integer('usuario', 254).references('id').inTable('users')
+      table.integer('usuario', 80).unsigned().references('id').inTable('users')
       table.timestamps()
     })
   }

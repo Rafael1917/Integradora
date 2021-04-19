@@ -23,6 +23,10 @@ class Dispensador extends Model {
       static get hidden(){
         return ['codigo', 'created_at', 'updated_at']
       }
+
+      usuario(){
+        this.belongsTo('App/Models/User')
+    }
 }
 
 module.exports = Dispensador
