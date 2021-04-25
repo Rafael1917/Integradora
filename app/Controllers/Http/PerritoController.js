@@ -161,10 +161,24 @@ class PerritoController {
         const filePath = `./public/fotosperritos/${perrito[0].foto}`;
 
         
-        return response.download(filePath);
-        
-       
-        
+        return response.download(filePath); 
+    }
+
+    async getimage({response, request}){
+        try {
+            const {nombre} = request.only(['nombre'])
+            const img = await Perrito.findBy('nombre', nombre)
+            const filePath = img.path
+            const isExist = await Drive.exists(filePath)
+
+            if (isExist) {
+              return response.download(Helpers.tmpPath(filePath));
+            }
+            return response.send({message: 'File does not exist'});
+          } catch (e) {
+              console.log(e)
+            return response.json(e)
+          }
     }
 }
 
