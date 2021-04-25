@@ -27,6 +27,7 @@ class PerritoController {
               })
           }
 //CAMBIO MINIMO
+//otro cambio xd
         const usuario = await auth.getUser()
         const perr = new Perrito()
         perr.nombre = data['nombre']
