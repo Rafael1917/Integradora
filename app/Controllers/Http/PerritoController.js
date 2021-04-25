@@ -2,6 +2,7 @@
 const db = use('Database')
 const Helpers = use('Helpers')
 const Perrito = use('App/Models/Perrito')
+const Drive = use('Drive')
 class PerritoController {
 //===================================== REGISTRAR PERRITOS =======================================
     async crear({request, response, auth}){
@@ -30,7 +31,7 @@ class PerritoController {
           const perr = new Perrito()
           perr.nombre = data['nombre']
           perr.foto = nombreF
-          perr.path = 'fotosperritos/' + nombreF.toString(),
+          perr.path = './public/fotosperritos' + nombreF.toString(),
           perr.due = usuario['id']
           await perr.save()
           return response.created({
@@ -173,7 +174,7 @@ class PerritoController {
             const isExist = await Drive.exists(filePath)
 
             if (isExist) {
-              return response.download(Helpers.tmpPath(filePath));
+              return response.download(filePath);
             }
             return response.send({message: 'File does not exist'});
           } catch (e) {
