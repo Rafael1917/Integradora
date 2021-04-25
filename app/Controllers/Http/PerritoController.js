@@ -26,14 +26,15 @@ class PerritoController {
               })
           }
 
-        const usuario = await auth.getUser()
-        const perr = new Perrito()
-        perr.nombre = data['nombre']
-        perr.foto = nombreF
-        perr.due = usuario['id']
-        await perr.save()
-        return response.created({
-            data,due:usuario
+          const usuario = await auth.getUser()
+          const perr = new Perrito()
+          perr.nombre = data['nombre']
+          perr.foto = nombreF
+          perr.path = 'fotosperritos/' + nombreF.toString(),
+          perr.due = usuario['id']
+          await perr.save()
+          return response.created({
+              data,due:usuario
         })
     }
 //===================================== ACTUALIZAR PERRITOS =======================================
