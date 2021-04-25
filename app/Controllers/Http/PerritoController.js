@@ -14,7 +14,7 @@ class PerritoController {
           })
           const nombreF = data['nombre'] + "." + imagen.extname;
 
-          await imagen.move('./public/fotosperritos', {
+          await imagen.move(Helpers.tmpPath('fotosperritos'), {
             name: nombreF,
             overwrite: true
           })
@@ -27,15 +27,15 @@ class PerritoController {
               })
           }
 
-          const usuario = await auth.getUser()
-          const perr = new Perrito()
-          perr.nombre = data['nombre']
-          perr.foto = nombreF
-          perr.path = './public/fotosperritos' + nombreF.toString(),
-          perr.due = usuario['id']
-          await perr.save()
-          return response.created({
-              data,due:usuario
+        const usuario = await auth.getUser()
+        const perr = new Perrito()
+        perr.nombre = data['nombre']
+        perr.foto = nombreF
+        perr.path = 'fotosperritos/' + nombreF.toString(),
+        perr.due = usuario['id']
+        await perr.save()
+        return response.created({
+            data,due:usuario
         })
     }
 //===================================== ACTUALIZAR PERRITOS =======================================
@@ -123,7 +123,10 @@ class PerritoController {
           })
 
           const nombreF = data['nombre'] + "." + imagen.extname;
-          await imagen.move('./public/fotosperritos', {
+          const path = 'fotosperritos/' + nombreF.toString();
+
+
+          await imagen.move(Helpers.tmpPath('fotosperritos'), {
             name: nombreF,
             overwrite: true
           })
@@ -135,9 +138,10 @@ class PerritoController {
                   message: foto.error()
               })
           }
-        
+
         if (await Perrito.query()
-        .update({'nombre': posto.nombre, 'foto': nombreF, 'updated_at': Date()})){
+        
+        .update({'nombre': posto.nombre, 'foto': nombreF, 'path': path, 'updated_at': Date()})){
          return response.status(200).json({
              status: true,
              message: "Los datos del perrito han sido actualizados"
@@ -163,8 +167,12 @@ class PerritoController {
         const filePath = `./public/fotosperritos/${perrito[0].foto}`;
 
         
-        return response.download(filePath); 
+        return response.download(filePath);
+        
+       
+        
     }
+//============================================================================================
 
     async getimage({response, request}){
         try {
@@ -174,7 +182,7 @@ class PerritoController {
             const isExist = await Drive.exists(filePath)
 
             if (isExist) {
-              return response.download(filePath);
+              return response.download(Helpers.tmpPath(filePath));
             }
             return response.send({message: 'File does not exist'});
           } catch (e) {
@@ -182,6 +190,8 @@ class PerritoController {
             return response.json(e)
           }
     }
+
+
 }
 
 module.exports = PerritoController
